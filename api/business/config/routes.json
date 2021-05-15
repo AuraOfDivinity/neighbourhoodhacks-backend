@@ -1,6 +1,14 @@
 {
   "routes": [
     {
+      "method": "POST",
+      "path": "/businesses/review/:id",
+      "handler": "business.review",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "GET",
       "path": "/businesses",
       "handler": "business.find",

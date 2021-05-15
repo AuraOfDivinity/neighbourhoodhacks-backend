@@ -67,6 +67,9 @@
     },
     "location": {
       "type": "string"
+    },
+    "reviews": {
+      "collection": "review"
     }
   }
 }
