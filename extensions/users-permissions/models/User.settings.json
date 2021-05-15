@@ -70,6 +70,10 @@
     },
     "reviews": {
       "collection": "review"
+    },
+    "isOnboarded": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

@@ -26,6 +26,24 @@
     },
     "tags": {
       "collection": "tag"
+    },
+    "averageRating": {
+      "type": "float",
+      "default": 0,
+      "max": 5
+    },
+    "numberOfReviews": {
+      "type": "integer",
+      "default": 0
+    },
+    "total": {
+      "type": "decimal",
+      "min": 0,
+      "default": 0
+    },
+    "isOnboarded": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

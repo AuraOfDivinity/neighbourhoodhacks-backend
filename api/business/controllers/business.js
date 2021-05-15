@@ -8,24 +8,34 @@
 module.exports = {
     async review(ctx) {
         const { id } = ctx.params
-        const { tagId } = ctx.request.body
-        const user = await strapi.plugins['users-permissions'].services.user.fetch({
-            id: ctx.state.user._id,
-          });
+        const { rating, review } = ctx.request.body;
+        const createdReview = await strapi.query('review').create({rating, review});
         
-        const tagResponse = await strapi.query('tag').findOne({ id: tagId });
-        if(!tagResponse){
-            ctx.badRequest({'message':'Invalid tag ID'});
+        const businessResponse = await strapi.query('business').findOne({ id });
+        if(!businessResponse){
+            ctx.badRequest({'message':'Invalid business ID. No business details available for the specified id.'});
         }
+        let numberOfRatings = businessResponse.numberOfReviews + 1;
+        let total = businessResponse.total + rating;
+        let averageRating = total / numberOfRatings;
 
-        let updatedUser = user;
-        updatedUser.user_preferences.push(tagResponse);
+        const updateResponse = await strapi.query('business').update({id}, {
+            reviews: [...businessResponse.reviews, createdReview.id],
+            numberOfReviews: numberOfRatings,
+            total,
+            averageRating
+        })
 
-        console.log(tagResponse)
-        console.log(updatedUser.user_preferences)
 
-        let data = await strapi.query('user', 'users-permissions').update({id:user.id}, updatedUser);
+        ctx.send({'message': 'success', 'data':updateResponse})
+    },
 
-        ctx.send({'message': 'success', 'data': data})
+    async search(ctx) {
+        const { searchTerm } = ctx.request.body;
+        
+        const searchResponse = await strapi.query('business').search({ _q: searchTerm , _limit: 10 });
+        console.log(searchResponse)
+
+        ctx.send({'message': 'success', 'data':searchResponse})
     }
 };

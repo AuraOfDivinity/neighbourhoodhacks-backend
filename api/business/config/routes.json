@@ -9,6 +9,14 @@
       }
     },
     {
+      "method": "POST",
+      "path": "/businesses/search/search-all",
+      "handler": "business.search",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "GET",
       "path": "/businesses",
       "handler": "business.find",
