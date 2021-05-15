@@ -1,0 +1,12 @@
+{
+    "routes": [
+      {
+        "method": "POST",
+        "path": "/tag",
+        "handler": "User.updateUserTags",
+        "config": {
+          "policies": []
+        }
+      }
+    ]
+}
